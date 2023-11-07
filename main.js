@@ -2,8 +2,7 @@ const express = require('express');
 const srv = express();
 
 srv.listen(3030, servidorAguardando);
-
-srv.get('/', getRootJSON);
+srv.get('/', getInfo);
 
 function getRootJSON(pedido, resposta) {
     homePage = {
@@ -12,6 +11,15 @@ function getRootJSON(pedido, resposta) {
         texto: 'Cacildissssssss bebidis lorem ipsusis bonitis',
     }
     resposta.json(homePage);
+}
+
+function getInfo(pedido, resposta) {
+    home = {
+        nome: 'servidor do mestre',
+        versao: 'v1.0.01.21',
+        licenca: 'MIT',
+    }
+    resposta.json(home);
 }
 
 function getRootHTML(pedido, resposta) {
