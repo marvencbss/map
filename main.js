@@ -2,7 +2,9 @@ const express = require('express');
 const srv = express();
 
 srv.listen(3030, servidorAguardando);
-srv.get('/', getInfo);
+srv.get('/info', getInfo);
+srv.get('/json', getRootJSON);
+srv.get('/html', getRootHTML);
 
 function getRootJSON(pedido, resposta) {
     homePage = {
@@ -31,6 +33,7 @@ function getRootHTML(pedido, resposta) {
         <title>Pagina</title>
     </head>
     <body>
+    <header>o titulo dos mestres</header>
         este é o melhor texto da história do planeta
     </body>
     </html>`
