@@ -8,11 +8,13 @@ srv.get('/dizoi/:nome', (req, res)=>{
     res.send(`oi ${req.params.nome}`)
 });
 
-srv.get('/dizoi/:nome/x/vezes', (req, res)=>{
-    let ois ='';
+srv.get('/dizoi/:nome/x/:vezes', (req, res)=>{
+    let ois = '<ul>';
     for(i=0; i<req.params.vezes; i++){
-        ois = ois + res.send(`oi ${req.params.nome}`)
+        ois = ois + `<li>oi ${req.params.nome}</li>`
     }
+    ois = ois + `</ul>`;
+    res.send(ois);
 });
 
 srv.get('/info', (req, res)=>{
