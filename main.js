@@ -1,17 +1,49 @@
 const express = require('express');
+const sqlite3 = require('sqlite3');
 const srv = express();
 const configs = require('./package.json');
-
 srv.listen(3030, servidorAguardando);
 
+srv.get('/deixaroi/:nome/:msg' , (req, res)=>{
+    const db = new sqlite3.Database('mensagens.db');
+    const sql = `INSERT INTO mensagens VALUES(?, ?)`;
+    db.run(sql, [req.params.nome, req.params.msg], (resultado, erro)=>{
+        if(erro) {
+            res.json({
+                status: 'erro',
+                msg: erro
+            })
+        } else {
+            res.json({
+                status: 'sucesso',
+                msg: res
+            })
+        }
+    });
+
+    res.json({status: 'ok', msg: 'recado enviado.'})
+})
+
+
 srv.get('/dizoi/:nome', (req, res)=>{
-    res.send(`oi ${req.params.nome}`)
+    const db = new sqlite3.Database('mensagens.db');
+    const sql = 'SELECT nome,msg FROM mensagens WHERE nome=?';
+
+    db.get(sql, [req.params.nome], (erro, linhas)=>{
+        if(erro) throw erro;
+        res.json(linhas);
+    });
+});
+
+
+srv.get('cep/:cep', (req, res)=>{
+    res.json(ceps[req.params.cep]);
 });
 
 srv.get('/dizoi/:nome/x/:vezes', (req, res)=>{
     let ois = '<ul>';
-    for(i=0; i<req.params.vezes; i++){
-        ois = ois + `<li>oi ${req.params.nome}</li>`
+    for(i=1; i<req.params.vezes; i++){
+        ois = ois + `<li>${i} - oi ${req.params.nome}</li>`
     }
     ois = ois + `</ul>`;
     res.send(ois);
