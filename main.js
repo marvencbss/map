@@ -6,7 +6,7 @@ srv.listen(3030, servidorAguardando);
 
 srv.get('/deixaroi/:nome/:msg' , (req, res)=>{
     const db = new sqlite3.Database('mensagens.db');
-    const sql = `INSERT INTO mensagens VALUES(?, ?)`;
+    const sql = `INSERT INTO nome VALUES(?, ?)`;
     db.run(sql, [req.params.nome, req.params.msg], (resultado, erro)=>{
         if(erro) {
             res.json({
@@ -16,12 +16,10 @@ srv.get('/deixaroi/:nome/:msg' , (req, res)=>{
         } else {
             res.json({
                 status: 'sucesso',
-                msg: res
+                msg: 'Mensagem enviada'
             })
         }
     });
-
-    res.json({status: 'ok', msg: 'recado enviado.'})
 })
 
 
